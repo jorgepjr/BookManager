@@ -36,11 +36,10 @@ namespace Application.UseCases
                     Response = new ResponseDto { Type = ResponseType.Success, Message = "Book registered successfully" };
 
                 }
-
             }
             catch (Exception ex)
             {
-                Response = new ResponseDto { Type = ResponseType.Success, Message = ex.Message };
+                Response = new ResponseDto { Type = ResponseType.Error, Message = ex.Message };
             }
         }
     }

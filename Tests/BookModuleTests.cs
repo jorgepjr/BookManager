@@ -10,9 +10,9 @@ namespace Tests;
 public class BookModuleTests
 {
     [Fact]
-    public async void MustReturnSuccessMessageOnCreateBook()
+    public async Task MustReturnSuccessMessageOnCreateBook()
     {
-        var response = new ResponseDto { Message = "Book registered successfully", Type = ResponseType.Success };
+        var responseMock = new ResponseDto { Message = "Book registered successfully", Type = ResponseType.Success };
 
         var bookPersistence = new Mock<IBookPersistence>();
         bookPersistence.Setup(x => x.Create(It.IsAny<Book>())).ReturnsAsync(true);
@@ -30,7 +30,35 @@ public class BookModuleTests
 
         await bookModule.Create(bookDto);
 
-        Assert.Equal(response.Type, bookModule.Response.Type);
-        Assert.Equal(response.Message, bookModule.Response.Message);
+        Assert.Equal(responseMock.Type, bookModule.Response.Type);
+        Assert.Equal(responseMock.Message, bookModule.Response.Message);
+    }
+
+    [Fact]
+    public void MustReturnErrorIfRequestFailed()
+    {
+        var responseMock = new ResponseDto { Message = "Book registered successfully", Type = ResponseType.Error };
+
+        var bookPersistence = new Mock<IBookPersistence>();
+        bookPersistence.Setup(x => x.Create(It.IsAny<Book>())).ThrowsAsync(new Exception(responseMock.Message));
+
+        var bookModule = new BookModule(bookPersistence.Object);
+
+        var bookDto = new BookDto
+        {
+            Code = "5506",
+            Title = "Teste",
+            Author = "joao",
+            Genre = "Aventura",
+            Publisher = "Abril"
+        };
+
+        _ = Assert.ThrowsAsync<Exception>(async () =>
+        {
+            await bookModule.Create(bookDto);
+        });
+
+        Assert.Equal(responseMock.Type, bookModule.Response.Type);
+        Assert.Equal(responseMock.Message, bookModule.Response.Message);
     }
 }
