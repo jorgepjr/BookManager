@@ -6,7 +6,7 @@ namespace Application.Interfaces
     {
         Task <bool> Create(Book book);
         Task <bool> Update();
-        Task <bool> GetById();
+        Task <Book?> GetByCode(string code);
         Task <IEnumerable<Book>> Filter();
         Task <bool> Inactivate();
     }

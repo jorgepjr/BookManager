@@ -42,5 +42,34 @@ namespace Application.UseCases
                 Response = new ResponseDto { Type = ResponseType.Error, Message = ex.Message };
             }
         }
+
+        public async Task<BookDto> GetByCode(string code)
+        {
+            if (string.IsNullOrEmpty(code))
+            {
+                Response = new ResponseDto { Type = ResponseType.Error, Message = "The code is null" };
+                return new BookDto { };
+            }
+
+            var book = await _bookPersistence.GetByCode(code);
+
+            if (book is null)
+            {
+                Response = new ResponseDto { Type = ResponseType.Info, Message = "Book not found" };
+                return new BookDto { };
+            }
+
+            var bookResponse = new BookDto
+            {
+                Code = book.Code,
+                Title = book.Title,
+                Author = book.Author,
+                Year = book.Year,
+                Genre = book.Genre,
+                Publisher = book.Publisher,
+            };
+
+            return bookResponse;
+        }
     }
 }

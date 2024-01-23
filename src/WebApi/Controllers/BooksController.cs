@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
+    [Route("books")]
     public class BooksController : Controller
     {
         private readonly IBookModule _bookModule;
@@ -14,7 +13,7 @@ namespace WebApi.Controllers
             _bookModule = bookModule;
         }
 
-        [HttpPost("/Create")]
+        [HttpPost("/create")]
         public async Task<IActionResult> Post([FromBody] BookDto bookDto)
         {
             if (!ModelState.IsValid)
@@ -24,12 +23,25 @@ namespace WebApi.Controllers
 
            await _bookModule.Create(bookDto);
 
-            if(_bookModule.Response.Type == ResponseType.Error)
+            if(_bookModule.Response.Type is ResponseType.Error)
             {
                 return BadRequest(_bookModule.Response.Message);
             }
 
             return Ok(_bookModule.Response.Message);
+        }
+
+        [HttpGet("/getByCode/{code}")]
+        public async Task<IActionResult> Get(string code)
+        {
+            var bookResponse = await _bookModule.GetByCode(code);
+
+            if(_bookModule.Response.Type is ResponseType.Error)
+            {
+                return BadRequest(_bookModule.Response.Message);
+            }
+
+            return Ok(bookResponse);
         }
     }
 }

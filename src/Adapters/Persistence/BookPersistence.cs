@@ -1,6 +1,7 @@
 ﻿
 using Application.Interfaces;
 using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Adapters.Persistence
 {
@@ -26,9 +27,10 @@ namespace Adapters.Persistence
             throw new NotImplementedException();
         }
 
-        public async Task<bool> GetById()
+        public async Task<Book?> GetByCode(string code)
         {
-            throw new NotImplementedException();
+            var book = await _context.Books.FirstOrDefaultAsync(x=>x.Code == code);
+            return book;
         }
 
         public async Task<bool> Inactivate()
