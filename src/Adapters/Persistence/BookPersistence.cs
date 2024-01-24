@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList;
 
 namespace Adapters.Persistence
 {
@@ -22,9 +23,11 @@ namespace Adapters.Persistence
             return true;
         }
 
-        public async Task<IEnumerable<Book>> Filter()
+        public async Task<IEnumerable<Book>> Filter(int page = 1, int itemByPage = 10)
         {
-            throw new NotImplementedException();
+            var books = await _context.Books.ToPagedListAsync(page, itemByPage);
+
+            return books;
         }
 
         public async Task<Book?> GetByCode(string code)

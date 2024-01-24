@@ -7,7 +7,7 @@ namespace Application.Interfaces
         Task <bool> Create(Book book);
         Task <bool> Update();
         Task <Book?> GetByCode(string code);
-        Task <IEnumerable<Book>> Filter();
+        Task <IEnumerable<Book>> Filter(int page, int itemByPage);
         Task <bool> Inactivate();
     }
 }

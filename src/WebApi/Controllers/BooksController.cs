@@ -43,5 +43,12 @@ namespace WebApi.Controllers
 
             return Ok(bookResponse);
         }
+
+        [HttpGet("/filter")]
+        public async Task<IActionResult> Get(int page, int itemByPage)
+        {
+            var booksResponse = await _bookModule.Filter(page, itemByPage);
+            return Ok(booksResponse);
+        }
     }
 }

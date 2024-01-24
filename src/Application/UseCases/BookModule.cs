@@ -71,5 +71,27 @@ namespace Application.UseCases
 
             return bookResponse;
         }
+
+        public async Task<IEnumerable<BookDto>> Filter(int page, int itemByPage)
+        {
+            var books = await _bookPersistence.Filter(page, itemByPage);
+
+            if(books is null)
+            {
+                return Enumerable.Empty<BookDto>();
+            }
+
+            var booksResponse = books.Select(x=> new BookDto
+            {
+                Code =x.Code,
+                Title = x.Title,
+                Author = x.Author,
+                Year = x.Year,
+                Genre = x.Genre,
+                Publisher = x.Publisher,
+            });
+
+            return booksResponse;
+        }
     }
 }
