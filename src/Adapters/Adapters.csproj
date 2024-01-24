@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.IQueryable.Extensions" Version="7.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.26" />
+    <PackageReference Include="X.PagedList" Version="8.4.7" />
   </ItemGroup>
 
   <ItemGroup>
