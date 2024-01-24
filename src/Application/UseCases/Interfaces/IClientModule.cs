@@ -4,7 +4,8 @@ namespace Application.UseCases.Interfaces
 {
     public interface IClientModule
     {
-        Task Create(ClientDto clientDto);
+        Task<Guid?> Create(ClientDto clientDto);
+        Task<ClientDto> GetById(Guid clientId);
         ResponseDto Response { get; set; }
     }
 }

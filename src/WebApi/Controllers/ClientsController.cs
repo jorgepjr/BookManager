@@ -18,19 +18,24 @@ namespace WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-               return BadRequest(ModelState);
+                return BadRequest(ModelState);
             }
 
-           await _clientModule.Create(clientDto);
+            var clientId = await _clientModule.Create(clientDto);
 
-            if(_clientModule.Response.Type is ResponseType.Error)
+            if (_clientModule.Response.Type is ResponseType.Error)
             {
                 return BadRequest(_clientModule.Response.Message);
             }
 
-            return Ok(_clientModule.Response.Message);
+            return Ok(new { clientId });
         }
 
-    
+        [HttpGet("getById/{clientId}")]
+        public async Task<IActionResult> Get(Guid clientId)
+        {
+            var response = await _clientModule.GetById(clientId);
+            return Ok(response);
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Application.UseCases
             _clientPersistence = clientPersistence;
         }
 
-        public async Task Create(ClientDto clientDto)
+        public async Task<Guid?> Create(ClientDto clientDto)
         {
             var client = new Client(clientDto.Name, clientDto.Email);
 
@@ -27,13 +27,27 @@ namespace Application.UseCases
                 if (successfulRequest)
                 {
                     Response = new ResponseDto { Type = ResponseType.Success, Message = "Client registered successfully" };
-
+                    return client.Id;
                 }
             }
             catch (Exception ex)
             {
                 Response = new ResponseDto { Type = ResponseType.Error, Message = ex.Message };
             }
+
+            return null;
+        }
+
+        public async Task<ClientDto> GetById(Guid clientId)
+        {
+            var client = await _clientPersistence.GetById(clientId);
+
+            if (client is Client)
+            {
+                return new ClientDto { Name = client.Name, Email = client.Email };
+            }
+
+            return new ClientDto { };
         }
     }
 }

@@ -22,6 +22,14 @@ namespace Adapters.Persistence
             return true;
         }
 
-        
+        public async Task<Client?> GetById(Guid clientId)
+        {
+            var client = await _context.Clients.FirstOrDefaultAsync(x => x.Id == clientId);
+            return client;
+        }
+        public async Task<bool> Update()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
