@@ -44,7 +44,7 @@ namespace Application.UseCases
 
             if (client is Client)
             {
-                return new ClientDto { Name = client.Name, Email = client.Email };
+                return new ClientDto {Id = client.Id, Name = client.Name, Email = client.Email };
             }
 
             return new ClientDto { };

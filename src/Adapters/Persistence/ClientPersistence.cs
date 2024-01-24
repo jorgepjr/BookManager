@@ -1,7 +1,6 @@
 ﻿using Application.Interfaces;
 using Domain;
 using Microsoft.EntityFrameworkCore;
-using X.PagedList;
 
 namespace Adapters.Persistence
 {
@@ -20,6 +19,11 @@ namespace Adapters.Persistence
             await _context.SaveChangesAsync();
 
             return true;
+        }
+
+        public Task<IEnumerable<Client>> Filter(int page, int itemByPage)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Client?> GetById(Guid clientId)

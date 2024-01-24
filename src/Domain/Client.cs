@@ -2,6 +2,8 @@
 {
     public class Client
     {
+        protected Client() { }
+
         public Client(string name, string email)
         {
             Name = name;
