@@ -8,4 +8,5 @@ public class BookManagerContext : DbContext
 
     public DbSet<Book> Books { get; set; }
     public DbSet<Client> Clients { get; set; }
+    public DbSet<Inventory> Iventories { get; set; }
 }
