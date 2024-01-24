@@ -17,8 +17,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BookManagerContext>(options =>
            options.UseInMemoryDatabase("memo"));
 
-builder.Services.AddScoped<IBookModule, BookModule>();
 builder.Services.AddScoped<IBookPersistence, BookPersistence>();
+builder.Services.AddScoped<IInventoryPersistence, InventoryPersistence>();
+builder.Services.AddScoped<IClientPersistence, ClientPersistence>();
+
+builder.Services.AddScoped<IBookModule, BookModule>();
+builder.Services.AddScoped<IClientModule, ClientModule>();
+
 
 var app = builder.Build();
 
