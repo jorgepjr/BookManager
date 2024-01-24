@@ -3,13 +3,13 @@
     public class ResponseDto
     {
         public ResponseType Type { get; set; }
-        public string Message { get; set; }
+        public string? Message { get; set; }
     }
 
     public enum ResponseType
     {
-        Info,
-        Success,
-        Error,
+        Info = 0,
+        Success = 1,
+        Error = 2,
     }
 }
