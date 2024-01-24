@@ -18,17 +18,17 @@ namespace WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-               return BadRequest(ModelState);
+                return BadRequest(ModelState);
             }
 
-           await _bookModule.Create(bookDto);
+            var response = await _bookModule.Create(bookDto);
 
-            if(_bookModule.Response.Type is ResponseType.Error)
+            if (_bookModule.Response.Type is ResponseType.Error)
             {
                 return BadRequest(_bookModule.Response.Message);
             }
 
-            return Ok(_bookModule.Response.Message);
+            return Ok(new { response.Id, response.Code, message = _bookModule.Response.Message });
         }
 
         [HttpGet("getByCode/{code}")]
@@ -36,7 +36,7 @@ namespace WebApi.Controllers
         {
             var bookResponse = await _bookModule.GetByCode(code);
 
-            if(_bookModule.Response.Type is ResponseType.Error)
+            if (_bookModule.Response.Type is ResponseType.Error)
             {
                 return BadRequest(_bookModule.Response.Message);
             }

@@ -1,6 +1,8 @@
 ﻿namespace Domain;
 public class Book
 {
+    protected Book() { }
+
     public Book(string code, string title, string author, string year, string genre, string publisher)
     {
         Code = code;
@@ -20,4 +22,5 @@ public class Book
     public string Genre { get; private set; }
     public string Publisher { get; private set; }
     public bool Active { get; private set; }
+    public List<Inventory> Inventories { get; private set; } = new();
 }

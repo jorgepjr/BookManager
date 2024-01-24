@@ -17,7 +17,7 @@ namespace Application.UseCases
         }
 
 
-        public async Task Create(BookDto bookDto)
+        public async Task<BookDto> Create(BookDto bookDto)
         {
             var book = new Book(
                 bookDto.Code,
@@ -34,6 +34,7 @@ namespace Application.UseCases
                 if (successfulRequest)
                 {
                     Response = new ResponseDto { Type = ResponseType.Success, Message = "Book registered successfully" };
+                    return new BookDto {Id = book.Id, Code = book.Code };
 
                 }
             }
@@ -41,6 +42,8 @@ namespace Application.UseCases
             {
                 Response = new ResponseDto { Type = ResponseType.Error, Message = ex.Message };
             }
+
+            return new BookDto { };
         }
 
         public async Task<BookDto> GetByCode(string code)
@@ -61,6 +64,7 @@ namespace Application.UseCases
 
             var bookResponse = new BookDto
             {
+                Id = book.Id,
                 Code = book.Code,
                 Title = book.Title,
                 Author = book.Author,
@@ -69,6 +73,7 @@ namespace Application.UseCases
                 Publisher = book.Publisher,
             };
 
+            Response = new ResponseDto { Type = ResponseType.Success };
             return bookResponse;
         }
 
