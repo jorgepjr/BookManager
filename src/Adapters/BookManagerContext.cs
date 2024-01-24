@@ -7,4 +7,5 @@ public class BookManagerContext : DbContext
     public BookManagerContext(DbContextOptions<BookManagerContext> contextOptions): base(contextOptions) { }
 
     public DbSet<Book> Books { get; set; }
+    public DbSet<Client> Clients { get; set; }
 }
