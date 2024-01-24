@@ -1,4 +1,6 @@
 ﻿using Application.Dtos;
+using Application.Interfaces;
+using Application.UseCases;
 using Application.UseCases.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +10,12 @@ namespace WebApi.Controllers
     public class BooksController : Controller
     {
         private readonly IBookModule _bookModule;
-        public BooksController(IBookModule bookModule)
+        private readonly CheckOutBook _checkoutBook;
+
+        public BooksController(IClientModule clientModule, IBookModule bookModule, IInventoryPersistence inventoryPersistence)
         {
             _bookModule = bookModule;
+            _checkoutBook = new CheckOutBook(clientModule, bookModule, inventoryPersistence);
         }
 
         [HttpPost("create")]
@@ -49,6 +54,13 @@ namespace WebApi.Controllers
         {
             var booksResponse = await _bookModule.Filter(page, itemByPage);
             return Ok(booksResponse);
+        }
+
+        [HttpPost("checkout")]
+        public async Task<IActionResult> Post([FromBody] CheckOutDto checkOutDto)
+        {
+            await _checkoutBook.Execute(checkOutDto);
+            return Ok();
         }
     }
 }
