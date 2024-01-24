@@ -1,10 +1,11 @@
 ﻿using Application.Dtos;
 using Application.Interfaces;
+using Application.UseCases.Interfaces;
 using Domain;
 
 namespace Application.UseCases
 {
-    public class ClientModule
+    public class ClientModule : IClientModule
     {
         private readonly IClientPersistence _clientPersistence;
 
@@ -17,7 +18,7 @@ namespace Application.UseCases
 
         public async Task Create(ClientDto clientDto)
         {
-            var client = new Client(clientDto.Name,clientDto.Email);
+            var client = new Client(clientDto.Name, clientDto.Email);
 
             try
             {
