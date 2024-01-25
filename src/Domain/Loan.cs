@@ -1,10 +1,10 @@
 ﻿namespace Domain
 {
-    public class CheckOut
+    public class Loan
     {
-        protected CheckOut() { }
+        protected Loan() { }
 
-        public CheckOut(Guid clientId, Guid bookId, int quantity)
+        public Loan(Guid clientId, Guid bookId, int quantity)
         {
             ClientId = clientId;
             BookId = bookId;

@@ -23,17 +23,17 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-        [HttpPost("checkOut")]
-        public async Task<IActionResult> Post([FromBody] CheckOutDto checkOutDto)
+        [HttpPost("Loan")]
+        public async Task<IActionResult> Post([FromBody] LoanDto LoanDto)
         {
-            await _inventoryModule.CheckOut(checkOutDto);
+            await _inventoryModule.Loan(LoanDto);
             return Ok();
         }
 
         [HttpPatch("checkIn")]
-        public async Task<IActionResult> Patch([FromBody] CheckOutDto checkOutDto)
+        public async Task<IActionResult> Patch([FromBody] LoanDto LoanDto)
         {
-            await _inventoryModule.CheckIn(checkOutDto);
+            await _inventoryModule.CheckIn(LoanDto);
             return Ok();
         }
     }

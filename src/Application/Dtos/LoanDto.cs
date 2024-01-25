@@ -2,7 +2,7 @@
 
 namespace Application.Dtos
 {
-    public class CheckOutDto
+    public class LoanDto
     {
         [Required(ErrorMessage = "Field '{0}' is required")]
         public Guid ClientId { get; set; }
