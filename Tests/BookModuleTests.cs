@@ -1,6 +1,6 @@
 using Application.Dtos;
 using Application.Interfaces;
-using Application.UseCases;
+using Application.UseCases.Modules;
 using Domain;
 using Moq;
 using Xunit;
