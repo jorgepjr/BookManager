@@ -17,14 +17,14 @@ namespace Domain
         public Book Book { get; private set; }
         public List<Inventory> Inventories { get; private set; } = new();
 
-        public void EmprestarLivro(int quantidade)
+        public void CheckOut(int quantity)
         {
-            Quantity -= quantidade;
+            Quantity -= quantity;
         }
 
-        public void Add(int quantidade)
+        public void CheckIn(int quantity)
         {
-            Quantity +=quantidade;
+            Quantity +=quantity;
         }
     }
 }
