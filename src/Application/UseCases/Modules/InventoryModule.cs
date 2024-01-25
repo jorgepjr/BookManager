@@ -57,13 +57,13 @@ namespace Application.UseCases.Modules
 
             if (client != null && _bookModule.Response.Type is Dtos.ResponseType.Success)
             {
-                var Loan = new Loan(client.Id, book.Id, LoanDto.Quantity); ;
+                var loan = new Loan(client.Id, book.Id, LoanDto.Quantity); ;
 
                 var inventory = await _inventoryPersistence.GetByBookId(book.Id);
 
-                if (inventory != null && inventory.Quantity >= Loan.Quantity)
+                if (inventory != null && inventory.Quantity >= loan.Quantity)
                 {
-                    inventory?.CheckOut(Loan.Quantity);
+                    inventory?.CheckOut(loan.Quantity);
                     await _inventoryPersistence.Update(inventory);
                 }
             }
