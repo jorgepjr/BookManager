@@ -5,12 +5,12 @@ using Domain;
 
 namespace Application.UseCases
 {
-    public class CheckOutBook
+    public class ReturnBook
     {
         private readonly IClientModule _clientModule;
         private readonly IBookModule _bookModule;
         private readonly IInventoryPersistence inventoryPersistence;
-        public CheckOutBook(IClientModule clientModule, IBookModule bookModule, IInventoryPersistence inventoryPersistence)
+        public ReturnBook(IClientModule clientModule, IBookModule bookModule, IInventoryPersistence inventoryPersistence)
         {
             _clientModule = clientModule;
             _bookModule = bookModule;
@@ -27,8 +27,8 @@ namespace Application.UseCases
                 var checkout = new CheckOut(client.Id, book.Id, checkOutDto.Quantity); ;
 
                 var inventory = await inventoryPersistence.GetByBookId(book.Id);
-                
-               inventory?.CheckOutBook(checkout.Quantity);
+
+                inventory?.ReturnBook(checkout.Quantity);
             }
         }
     }

@@ -56,8 +56,15 @@ namespace WebApi.Controllers
             return Ok(booksResponse);
         }
 
-        [HttpPost("checkout")]
+        [HttpPost("retun")]
         public async Task<IActionResult> Post([FromBody] CheckOutDto checkOutDto)
+        {
+            await _checkoutBook.Execute(checkOutDto);
+            return Ok();
+        }
+
+        [HttpPatch("checkout")]
+        public async Task<IActionResult> Patch([FromBody] CheckOutDto checkOutDto)
         {
             await _checkoutBook.Execute(checkOutDto);
             return Ok();
