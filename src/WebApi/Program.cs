@@ -14,8 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<BookManagerContext>(options =>
-           options.UseInMemoryDatabase("memo"));
+builder.Services.AddDbContext<BookManagerContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("BookManager")));
 
 builder.Services.AddScoped<IBookPersistence, BookPersistence>();
 builder.Services.AddScoped<IInventoryPersistence, InventoryPersistence>();
@@ -24,8 +23,15 @@ builder.Services.AddScoped<IClientPersistence, ClientPersistence>();
 builder.Services.AddScoped<IBookModule, BookModule>();
 builder.Services.AddScoped<IClientModule, ClientModule>();
 
+var serviceProvider = builder.Services.BuildServiceProvider();
+using (var serviceScope = serviceProvider.CreateScope())
+{
+    var context = serviceScope.ServiceProvider.GetRequiredService<BookManagerContext>();
+   await context.Database.MigrateAsync();
+}
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -40,4 +46,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();
