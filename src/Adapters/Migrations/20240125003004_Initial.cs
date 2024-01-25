@@ -66,7 +66,7 @@ namespace Adapters.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CheckOuts",
+                name: "Loans",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -77,9 +77,9 @@ namespace Adapters.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CheckOuts", x => x.Id);
+                    table.PrimaryKey("PK_Loans", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CheckOuts_Iventories_InventoryId",
+                        name: "FK_Loans_Iventories_InventoryId",
                         column: x => x.InventoryId,
                         principalTable: "Iventories",
                         principalColumn: "Id",
@@ -87,8 +87,8 @@ namespace Adapters.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CheckOuts_InventoryId",
-                table: "CheckOuts",
+                name: "IX_Loans_InventoryId",
+                table: "Loans",
                 column: "InventoryId");
 
             migrationBuilder.CreateIndex(
@@ -105,7 +105,7 @@ namespace Adapters.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CheckOuts");
+                name: "Loans");
 
             migrationBuilder.DropTable(
                 name: "Clients");

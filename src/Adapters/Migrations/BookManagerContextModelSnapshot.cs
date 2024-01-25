@@ -60,7 +60,7 @@ namespace Adapters.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("Domain.CheckOut", b =>
+            modelBuilder.Entity("Domain.Loan", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,7 +82,7 @@ namespace Adapters.Migrations
 
                     b.HasIndex("InventoryId");
 
-                    b.ToTable("CheckOuts");
+                    b.ToTable("Loans");
                 });
 
             modelBuilder.Entity("Domain.Client", b =>
@@ -128,7 +128,7 @@ namespace Adapters.Migrations
                     b.ToTable("Iventories");
                 });
 
-            modelBuilder.Entity("Domain.CheckOut", b =>
+            modelBuilder.Entity("Domain.Loan", b =>
                 {
                     b.HasOne("Domain.Inventory", "Inventory")
                         .WithMany()
