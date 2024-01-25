@@ -5,7 +5,7 @@ using Domain;
 
 namespace Application.UseCases.Modules
 {
-    public class InventoryModule
+    public class InventoryModule : IInventoryModule
     {
         private readonly IClientModule _clientModule;
         private readonly IBookModule _bookModule;
@@ -20,38 +20,52 @@ namespace Application.UseCases.Modules
 
         public async Task Create(InventoryDto iventoryDto)
         {
-            var inventory = new Inventory(iventoryDto.Quantity, iventoryDto.BookId.Value);
+            if (!iventoryDto.BookId.HasValue)
+            {
+                throw new Exception($"{iventoryDto.BookId} invalid");
+            }
 
+            var book = await _bookModule.GetById(iventoryDto.BookId.Value);
+
+            var inventory = new Inventory(iventoryDto.Quantity, book.Id);
             await _inventoryPersistence.Create(inventory);
         }
 
-        public async Task CheckIn(CheckOutDto checkOutDto)
+        public async Task CheckIn(LoanDto LoanDto)
         {
-            var client = await _clientModule.GetById(checkOutDto.ClientId);
-            var book = await _bookModule.GetByCode(checkOutDto.BookCode);
+            var client = await _clientModule.GetById(LoanDto.ClientId);
+            var book = await _bookModule.GetByCode(LoanDto.BookCode);
 
             if (client != null && _bookModule.Response.Type is Dtos.ResponseType.Success)
             {
-                var checkout = new CheckOut(client.Id, book.Id, checkOutDto.Quantity); ;
+                var Loan = new Loan(client.Id, book.Id, LoanDto.Quantity); ;
 
                 var inventory = await _inventoryPersistence.GetByBookId(book.Id);
 
-                inventory?.CheckIn(checkout.Quantity);
+                if (inventory != null && Loan.Quantity <= inventory.Quantity)
+                {
+                    inventory?.CheckIn(Loan.Quantity);
+                    await _inventoryPersistence.Update(inventory);
+                }
             }
         }
 
-        public async Task CheckOut(CheckOutDto checkOutDto)
+        public async Task Loan(LoanDto LoanDto)
         {
-            var client = await _clientModule.GetById(checkOutDto.ClientId);
-            var book = await _bookModule.GetByCode(checkOutDto.BookCode);
+            var client = await _clientModule.GetById(LoanDto.ClientId);
+            var book = await _bookModule.GetByCode(LoanDto.BookCode);
 
             if (client != null && _bookModule.Response.Type is Dtos.ResponseType.Success)
             {
-                var checkout = new CheckOut(client.Id, book.Id, checkOutDto.Quantity); ;
+                var Loan = new Loan(client.Id, book.Id, LoanDto.Quantity); ;
 
                 var inventory = await _inventoryPersistence.GetByBookId(book.Id);
 
-                inventory?.CheckOut(checkout.Quantity);
+                if (inventory != null && inventory.Quantity >= Loan.Quantity)
+                {
+                    inventory?.CheckOut(Loan.Quantity);
+                    await _inventoryPersistence.Update(inventory);
+                }
             }
         }
     }

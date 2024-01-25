@@ -16,12 +16,11 @@ namespace Application.UseCases.Modules
             _bookPersistence = bookPersistence;
         }
 
-
         public async Task<BookDto> Create(BookDto bookDto)
         {
             var response = await _bookPersistence.GetByCode(bookDto.Code);
 
-            if(response is not null)
+            if (response is not null)
             {
                 Response = new ResponseDto { Type = ResponseType.Error, Message = "code already exists" };
                 return new BookDto { };
@@ -106,6 +105,12 @@ namespace Application.UseCases.Modules
             });
 
             return booksResponse;
+        }
+
+        public async Task<Book> GetById(Guid bookId)
+        {
+            var book = await _bookPersistence.GetById(bookId);
+            return book;
         }
     }
 }
