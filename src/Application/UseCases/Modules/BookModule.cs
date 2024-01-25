@@ -19,6 +19,14 @@ namespace Application.UseCases.Modules
 
         public async Task<BookDto> Create(BookDto bookDto)
         {
+            var response = await _bookPersistence.GetByCode(bookDto.Code);
+
+            if(response is not null)
+            {
+                Response = new ResponseDto { Type = ResponseType.Error, Message = "code already exists" };
+                return new BookDto { };
+            }
+
             var book = new Book(
                 bookDto.Code,
                 bookDto.Title,
@@ -88,6 +96,7 @@ namespace Application.UseCases.Modules
 
             var booksResponse = books.Select(x => new BookDto
             {
+                Id = x.Id,
                 Code = x.Code,
                 Title = x.Title,
                 Author = x.Author,
