@@ -1,8 +1,8 @@
 using Adapters;
 using Adapters.Persistence;
 using Application.Interfaces;
-using Application.UseCases;
 using Application.UseCases.Interfaces;
+using Application.UseCases.Modules;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

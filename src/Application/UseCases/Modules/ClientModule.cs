@@ -3,7 +3,7 @@ using Application.Interfaces;
 using Application.UseCases.Interfaces;
 using Domain;
 
-namespace Application.UseCases
+namespace Application.UseCases.Modules
 {
     public class ClientModule : IClientModule
     {
@@ -44,7 +44,7 @@ namespace Application.UseCases
 
             if (client is Client)
             {
-                return new ClientDto {Id = client.Id, Name = client.Name, Email = client.Email };
+                return new ClientDto { Id = client.Id, Name = client.Name, Email = client.Email };
             }
 
             return new ClientDto { };

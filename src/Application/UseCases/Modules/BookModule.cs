@@ -3,7 +3,7 @@ using Application.Interfaces;
 using Application.UseCases.Interfaces;
 using Domain;
 
-namespace Application.UseCases
+namespace Application.UseCases.Modules
 {
     public class BookModule : IBookModule
     {
@@ -34,7 +34,7 @@ namespace Application.UseCases
                 if (successfulRequest)
                 {
                     Response = new ResponseDto { Type = ResponseType.Success, Message = "Book registered successfully" };
-                    return new BookDto {Id = book.Id, Code = book.Code };
+                    return new BookDto { Id = book.Id, Code = book.Code };
 
                 }
             }
@@ -81,14 +81,14 @@ namespace Application.UseCases
         {
             var books = await _bookPersistence.Filter(page, itemByPage);
 
-            if(books is null)
+            if (books is null)
             {
                 return Enumerable.Empty<BookDto>();
             }
 
-            var booksResponse = books.Select(x=> new BookDto
+            var booksResponse = books.Select(x => new BookDto
             {
-                Code =x.Code,
+                Code = x.Code,
                 Title = x.Title,
                 Author = x.Author,
                 Year = x.Year,
