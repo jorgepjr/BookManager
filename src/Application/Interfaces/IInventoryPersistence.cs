@@ -6,5 +6,6 @@ namespace Application.Interfaces
     {
         Task Create(Inventory inventory);
         Task<Inventory?> GetByBookId(Guid bookId);
+        Task Update(Inventory inventory);
     }
 }

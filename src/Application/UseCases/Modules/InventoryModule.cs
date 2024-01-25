@@ -5,7 +5,7 @@ using Domain;
 
 namespace Application.UseCases.Modules
 {
-    public class InventoryModule : IInventoryModule
+    public class InventoryModule
     {
         private readonly IClientModule _clientModule;
         private readonly IBookModule _bookModule;

@@ -36,6 +36,12 @@ namespace Adapters.Persistence
             return book;
         }
 
+        public async Task<Book?> GetById(Guid bookId)
+        {
+            var book = await _context.Books.FirstOrDefaultAsync(x => x.Id == bookId);
+            return book;
+        }
+
         public async Task<bool> Inactivate()
         {
             throw new NotImplementedException();

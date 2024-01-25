@@ -9,5 +9,6 @@ namespace Application.Interfaces
         Task <Book?> GetByCode(string code);
         Task <IEnumerable<Book>> Filter(int page, int itemByPage);
         Task <bool> Inactivate();
+        Task<Book>GetById(Guid bookId);
     }
 }

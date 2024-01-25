@@ -1,4 +1,5 @@
 ﻿using Application.Dtos;
+using Domain;
 
 namespace Application.UseCases.Interfaces
 {
@@ -7,6 +8,8 @@ namespace Application.UseCases.Interfaces
         Task<BookDto> Create(BookDto bookDto);
         Task<BookDto> GetByCode(string code);
         Task<IEnumerable<BookDto>> Filter(int page, int itemByPage);
+        Task<Book>GetById(Guid bookId);
+
         ResponseDto Response { get; set; }
     }
 }

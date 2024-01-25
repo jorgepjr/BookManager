@@ -19,6 +19,12 @@ namespace Adapters.Persistence
             await _context.SaveChangesAsync();
         }
 
+        public async Task Update(Inventory inventory)
+        {
+            _context.Iventories.Update(inventory);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<Inventory?> GetByBookId(Guid bookId)
         {
             var inventory = await _context.Iventories.FirstOrDefaultAsync(x=>x.BookId == bookId);
